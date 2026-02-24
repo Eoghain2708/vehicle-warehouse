@@ -9,7 +9,7 @@ public abstract class Vehicle {
 
         private final String desc;
 
-        private Modality(String desc) {
+        Modality(String desc) {
             this.desc = desc;
         }
 
@@ -26,13 +26,15 @@ public abstract class Vehicle {
     private final int price;
 
 
+
+
     // optional
     private final int year;
     private final String model;
     private final String colour;
     private final int horsepower;
     private final int topSpeed;
-
+    private boolean checkedOut;
 
     abstract static class Builder<T extends Builder<T>> {
 
@@ -45,6 +47,7 @@ public abstract class Vehicle {
         private String colour = "not set";
         private int horsepower = 0;
         private int topSpeed = 0;
+        private boolean checkedOut = false;
 
 
         protected Builder (String name, Modality modality, int price) {
@@ -93,8 +96,18 @@ public abstract class Vehicle {
         this.topSpeed = builder.topSpeed;
         this.horsepower = builder.horsepower;
         this.id = nextID.getAndIncrement();
+        this.checkedOut = builder.checkedOut;
     }
 
+    public void checkOut() {
+        this.checkedOut = true;
+    }
+
+    public void checkIn() {
+        this.checkedOut = false;
+    }
+
+    public boolean isCheckedOut() { return checkedOut; }
 
     public int getID() {
         return this.id;
@@ -121,5 +134,7 @@ public abstract class Vehicle {
     public int getTopSpeed() { return topSpeed; }
 
     public int getHorsepower() { return horsepower; }
+
+
 
 }

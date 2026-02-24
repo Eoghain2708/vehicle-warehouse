@@ -1,5 +1,7 @@
 package warehouse;
 
+import java.util.List;
+
 public class App {
     public static void main(String[] args) {
         Car car = new Car.Builder("Ferrari", Vehicle.Modality.LAND, 350000, Car.Variation.COUPE).
@@ -11,8 +13,12 @@ public class App {
         Boat boat = new Boat.Builder("Steve", Vehicle.Modality.AIR, 60000, Boat.Variation.YACHT, Boat.UseFor.OCEAN).
                 numEngines(4).topSpeed(76).horsepower(3000).build();
 
-        System.out.println(car.toString());
-        System.out.println(car2.toString());
-        System.out.println(boat.toString());
+        Warehouse warehouse = Warehouse.create();
+        warehouse.add(car);
+        warehouse.addAll(List.of(car, car2, boat));
+        VehicleSet v = warehouse.getWarehouse();
+
+
+        System.out.println(v.search(4).toString());
     }
 }
